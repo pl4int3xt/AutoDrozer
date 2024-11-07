@@ -81,30 +81,49 @@ def save_results_to_html(results, output_html):
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Drozer Command Results</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ+K2+P6T3vBa6J00k78sghYh/g3AqWbVjxU3jHElg1l5PCgD7Yzq9rWc9t5" crossorigin="anonymous">
         <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            h1 { color: #333; }
-            .command { margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-            .command h2 { font-size: 18px; color: #555; }
-            .output pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+            body { font-family: 'Arial', sans-serif; margin: 20px; background-color: #f8f9fa; }
+            h1 { color: #495057; text-align: center; margin-bottom: 40px; }
+            .command { margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+            .command h2 { font-size: 20px; color: #343a40; }
+            .output pre { background: #e9ecef; padding: 15px; border-radius: 5px; font-size: 14px; color: #495057; overflow-x: auto; }
+            .command p { font-size: 14px; color: #6c757d; margin-bottom: 10px; }
+            .btn-copy { background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+            .btn-copy:hover { background-color: #0056b3; }
         </style>
     </head>
     <body>
-        <h1>Drozer Command Results</h1>
-    """
 
+        <h1>Drozer Command Results</h1>
+
+        <div class="container">
+    """
     for result in results:
         html_content += f"""
         <div class="command">
             <h2>{result['title']}</h2>
-            <p><strong>Command:</strong> {result['command']}</p>
+            <p><strong>Command:</strong> <code>{result['command']}</code></p>
+            <button class="btn btn-primary btn-sm btn-copy" onclick="copyToClipboard('{result['command']}')">Copy Command</button>
             <div class="output">
                 <pre>{result['output']}</pre>
             </div>
         </div>
+        <hr>
         """
 
     html_content += """
+        </div>
+
+        <script>
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(function() {
+                    alert('Command copied to clipboard!');
+                }, function(err) {
+                    alert('Error copying text: ' + err);
+                });
+            }
+        </script>
     </body>
     </html>
     """
@@ -112,6 +131,7 @@ def save_results_to_html(results, output_html):
     with open(output_html, 'w') as file:
         file.write(html_content)
     print(Fore.GREEN + "[ ✔ ] [SUCCESS] HTML file created: " + Fore.CYAN + f"{output_html}")
+
 
 def main(yaml_file, output_file, package_name):
     # Print the banner at the start
