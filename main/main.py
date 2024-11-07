@@ -160,7 +160,7 @@ def main(yaml_file, output_file, package_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print(Fore.RED + "[ - ] [ERROR] Usage: python drozer_script.py <commands.yml> <output.json> <package_name>")
+        print(Fore.RED + "[ - ] [ERROR] Usage: python main.py <commands.yml> <output.json> <package_name>")
         sys.exit(1)
     
     yaml_file = sys.argv[1]
