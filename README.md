@@ -85,3 +85,15 @@ Install the requirements
 ```bash
 pip install -r requirements.txt
 ```
+
+
+## Custom rules
+
+You can define your own custom commands to run in `commands.yml`. Just add a title and a drozer commands as follows
+
+```yml
+- title: "Package Information"
+  command: "run app.package.info -a {package}"
+- title: "Custom title"
+  command: "Custom command"
+```
